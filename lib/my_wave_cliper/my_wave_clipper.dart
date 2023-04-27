@@ -9,8 +9,21 @@ class MyWaveClipper extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("My Wave Clipper"),),
       body: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20)
+        ),
         child: Stack(
           children: [
+            Opacity(
+              opacity: 0.5 ,
+              child: ClipPath(
+                clipper: WClipper(),
+                child: Container(color: Colors.black,
+                  height: 200,
+                ),
+              ),
+            ),
+            /*
             Opacity(
               opacity: 0.5 ,
               child: ClipPath(
@@ -36,6 +49,8 @@ class MyWaveClipper extends StatelessWidget {
                 ),
               ),
             ),
+
+             */
           ],
         ),
       ),
@@ -62,6 +77,45 @@ class WaveClipper extends CustomClipper<Path>{
     // fourth point of quadratic bezier curve
     path.quadraticBezierTo(secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
     path.lineTo(size.width, 0);
+    path.close();
+    return path;
+
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    // TODO: implement shouldReclip
+    throw UnimplementedError();
+  }
+
+}
+
+class WClipper extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size){
+    debugPrint(size.width.toString());
+    var path = new Path();
+    path.lineTo(0, size.height - 80); // start path with this
+    var firstStart = Offset(0, size.height - 50);
+    // first point of quadratic bezier curve
+    var firstEnd = Offset(size.width/2, size.height -50 );
+    // second point of quadratic bezier curve
+    path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
+
+    var secondStart = Offset(size.width/2, size.height - 50 );
+    // third point of quadratic bezier curve
+    var secondEnd = Offset(size.width - 40, size.height - 50);
+    // fourth point of quadratic bezier curve
+    path.quadraticBezierTo(secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
+
+
+    var thStart = Offset(size.width , size.height -50 );
+    // third point of quadratic bezier curve
+    var thEnd = Offset(size.width - 40, size.height );
+    // fourth point of quadratic bezier curve
+    path.quadraticBezierTo(thStart.dx, thStart.dy, thEnd.dx, thEnd.dy);
+
+    path.lineTo(size.width, size.height);
     path.close();
     return path;
 

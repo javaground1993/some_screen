@@ -4,6 +4,9 @@ import 'package:somescreen/home_screen/home_screen.dart';
 import 'package:somescreen/my_wave_cliper/my_wave_clipper.dart';
 import 'package:somescreen/shoping_cart/views/cart_screen.dart';
 
+import 'coffee_ui/views/home_page.dart';
+import 'dashbord/home_ui.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Some scene',
-      home: const CartScreen(),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
